@@ -33,84 +33,100 @@
 #include "DHT.h"
 #include <Servo.h>
 
-#define DHTPIN 2
-#define DHTTYPE DHT11
+// Definições do DHT11
+#define DHTPIN 2      // Pino onde o sensor DHT11 está conectado
+#define DHTTYPE DHT11 // Tipo de sensor
 
 DHT dht(DHTPIN, DHTTYPE);
 Servo motor;
 
-const int redLed = 13;
-const int greenLed = 12;
-const int yellowLed = 11;
-const int potPin = A0;
-const int buzzerPin = 10;
-const int ldrPin = A1;
-const int headlightPin = 8;
+const int redLed = 13;    // Pino do LED vermelho
+const int greenLed = 12;  // Pino do LED verde
+const int yellowLed = 11; // Pino do LED amarelo
+const int orangeLed= 8;   // Pino do LED branco (faróis)
+const int ldrPin = A1;    // Pino do LDR
+const int potPin = A0;    // Pino do potenciômetro
+const int buzzerPin = 10; // Pino do buzzer
 
-int sensorValue = 0;
-float speed = 0.0;
-float temperature = 0.0;
-int ldrValue = 0;
+// Variáveis
+int sensorValue = 0;     // Valor lido do potenciômetro
+float speed = 0.0;       // Velocidade simulada do carro
+float temperature = 0.0; // Temperatura do motor
+int ldrValue = 0;        // Valor lido do LDR
 
 void setup() {
-    Serial.begin(9600);
-    pinMode(redLed, OUTPUT);
-    pinMode(greenLed, OUTPUT);
-    pinMode(yellowLed, OUTPUT);
-    pinMode(buzzerPin, OUTPUT);
-    pinMode(headlightPin, OUTPUT);
-    motor.attach(9);
-    dht.begin();
+  Serial.begin(9600);         // Inicializa a comunicação serial
+  pinMode(redLed, OUTPUT);    // Define o pino do LED vermelho como saída
+  pinMode(greenLed, OUTPUT);  // Define o pino do LED verde como saída
+  pinMode(yellowLed, OUTPUT); // Define o pino do LED amarelo como saída
+  pinMode(orangeLed, OUTPUT);  // Define o pino do LED laranja como saída
+  pinMode(buzzerPin, OUTPUT); // Define o pino do buzzer como saída
+  motor.attach(9);            // Define o pino do motor como saída
+  dht.begin();                // Inicializa o sensor DHT11
 }
 
 void loop() {
-    sensorValue = analogRead(potPin);
-    speed = sensorValue * (320.0 / 1023.0);
-    temperature = speed * (80.0 / 320.0);
-    
-   Serial.print("Velocidade do carro: ");
-   Serial.print(speed);
-   Serial.println(" km/h");
-   Serial.print("Temperatura do motor: ");
-   Serial.print(temperature);
-   Serial.println(" *C");
-   Serial.println("-----------------------------");
-    
-   if (speed < 110) {
-        digitalWrite(greenLed, HIGH);
-        digitalWrite(yellowLed, LOW);
-        digitalWrite(redLed, LOW);
-    } else if (speed < 230) {
-        digitalWrite(greenLed, LOW);
-        digitalWrite(yellowLed, HIGH);
-        digitalWrite(redLed, LOW);
-    } else {
-        digitalWrite(greenLed, LOW);
-        digitalWrite(yellowLed, LOW);
-        digitalWrite(redLed, HIGH);
-    }
+  // Leitura do potenciômetro
+  sensorValue = analogRead(potPin);
+  speed = sensorValue * (320.0 / 1023.0); // Converte para uma velocidade simulada (0-320 km/h)
+  
+  // Simula a temperatura baseada na velocidade
+  temperature = speed * (80.0 / 320.0); // Mapeia a velocidade (0-320 km/h) para uma temperatura (0-80 °C)
 
-   motor.write(map(sensorValue, 0, 1023, 0, 180));
+  // Leitura do LDR
+  ldrValue = analogRead(ldrPin);
+  Serial.print("LDR Value: ");
+  Serial.println(ldrValue);
 
-   if (temperature > 70) {
-        digitalWrite(buzzerPin, HIGH);
-        delay(2000);
-        digitalWrite(buzzerPin, LOW);
-        delay(2000);
-    } else {
-        digitalWrite(buzzerPin, LOW);
-    }
+  // Controle dos faróis baseado na luz ambiente
+  if (ldrValue > 650) {  // Se a leitura do LDR for baixa (indicando pouca luz)
+    digitalWrite(orangeLed, HIGH); // Liga os faróis
+  } else {
+    digitalWrite(orangeLed, LOW);  // Desliga os faróis
+  }
 
-   ldrValue = analogRead(ldrPin);
-    if (ldrValue < 500) {
-        digitalWrite(headlightPin, HIGH);
-    } else {
-        digitalWrite(headlightPin, LOW);
-    }
+  // Exibe a velocidade e a temperatura no monitor serial
+  Serial.print("Velocidade do carro: ");
+  Serial.print(speed);
+  Serial.println(" km/h");
+  
+  Serial.print("Temperatura do motor: ");
+  Serial.print(temperature);
+  Serial.println(" *C");
+  Serial.println("-----------------------------");
 
-   delay(900);
+  // Controle dos LEDs baseado na velocidade
+  if (speed < 110) {  // Se a velocidade for menor que 110 km/h
+    digitalWrite(greenLed, HIGH); // Liga o LED verde
+    digitalWrite(yellowLed, LOW); // Desliga o LED amarelo
+    digitalWrite(redLed, LOW);    // Desliga o LED vermelho
+  } else if (speed < 230) { // Se a velocidade for entre 110 e 230 km/h
+    digitalWrite(greenLed, LOW);  // Desliga o LED verde
+    digitalWrite(yellowLed, HIGH);// Liga o LED amarelo
+    digitalWrite(redLed, LOW);    // Desliga o LED vermelho
+  } else { // Se a velocidade for maior que 230 km/h
+    digitalWrite(greenLed, LOW);  // Desliga o LED verde
+    digitalWrite(yellowLed, LOW); // Desliga o LED amarelo
+    digitalWrite(redLed, HIGH);   // Liga o LED vermelho
+  }
+
+  // Controle do motor baseado na velocidade (simulação)
+  motor.write(map(sensorValue, 0, 1023, 0, 180)); // Ajusta a posição do servo motor
+
+  // Controle do buzzer baseado na temperatura
+  if (temperature > 70) {
+    digitalWrite(buzzerPin, HIGH); // Liga o buzzer
+    delay(2000);                   // Espera 2 segundos
+    digitalWrite(buzzerPin, LOW);  // Desliga o buzzer
+    delay(2000);                   // Espera 2 segundos
+  } else {
+    digitalWrite(buzzerPin, LOW);  // Desliga o buzzer
+  }
+
+  delay(900); // Espera 0,9 segundo entre leituras
 }
-        </code>
+
+</code>
     </pre>
 
 <h2>Video no Simulador</h2>

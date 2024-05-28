@@ -115,4 +115,13 @@ void loop() {
 
 <h2>Video no Simulador</h2>
 
+<h2>Grupo</h2>
+<ul>
+        <li>Isadora</li>
+        <li>Julio</li>
+        <li>Khadija</li>
+        <li>Kaio</li>
+        <li>Pedro</li>
+</ul>
+
     

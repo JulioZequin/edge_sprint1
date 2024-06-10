@@ -43,7 +43,7 @@ Servo motor;
 const int redLed = 13;    // Pino do LED vermelho
 const int greenLed = 12;  // Pino do LED verde
 const int yellowLed = 11; // Pino do LED amarelo
-const int orangeLed= 8;   // Pino do LED branco (faróis)
+const int orangeLed= 8;   // Pino do LED laranja (faróis)
 const int ldrPin = A1;    // Pino do LDR
 const int potPin = A0;    // Pino do potenciômetro
 const int buzzerPin = 10; // Pino do buzzer

@@ -7,7 +7,7 @@
         <li>Potenciômetro</li>
         <li>Servo Motor</li>
         <li>Sensor de Temperatura e Umidade DHT11</li>
-        <li>LEDs (Vermelho, Verde, Amarelo, Branco)</li>
+        <li>LEDs (Vermelho, Verde, Amarelo, Laranja)</li>
         <li>Buzzer</li>
         <li>LDR (Resistor Dependente de Luz)</li>
         <li>Resistores</li>
@@ -25,7 +25,7 @@
             </ul>
         </li>
         <li><strong>Buzzer:</strong> Emite um alarme se a temperatura exceder 70°C, com um intervalo de 2 segundos.</li>
-        <li><strong>Faróis Automáticos:</strong> Um LED branco que é acionado automaticamente com base na leitura do sensor LDR (Resistor Dependente de Luz).</li>
+        <li><strong>Faróis Automáticos:</strong> Um LED laranja que é acionado automaticamente com base na leitura do sensor LDR (Resistor Dependente de Luz).</li>
     </ul>
     <h2>Código do Projeto</h2>
     <pre>

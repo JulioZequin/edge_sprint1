@@ -1,4 +1,12 @@
 <h1>Projeto Simulador de Fórmula E</h1>
+<h2>Grupo</h2>
+<ul>
+        <li>ISADORA DE MORAIS MENEGHETTI (RM556326)</li>
+        <li>JÚLIO CÉSAR RUIZ ZEQUIN (RM554676)</li>
+        <li>KAIO DRAGO LIMA SOUZA (RM556095)</li>
+        <li>KHADIJA DO ROCIO VIEIRA DE LIMA (RM558971)</li>
+        <li>PEDRO HENRIQUE FAIM DOS SANTOS (RM557440)</li>
+</ul>
     <h2>Visão Geral do Projeto</h2>
     <p>Este projeto simula um carro de Fórmula E utilizando um setup com Arduino. A simulação inclui um potenciômetro para controlar a velocidade do carro, um servo motor para representar o velocímetro e um sensor DHT11 para simular a temperatura do motor do carro. Adicionalmente, o projeto possui LEDs para indicar a velocidade e a economia da bateria, um buzzer para alertas de alta temperatura e um sensor LDR para controlar automaticamente os faróis.</p>
     <h2>Componentes Utilizados</h2>
@@ -129,15 +137,9 @@ void loop() {
 </code>
     </pre>
 
-<h2>Video no Simulador</h2>
+<h2>Link do Simulador</h2>
+<a href="https://wokwi.com/projects/398611429517063169">https://wokwi.com/projects/398611429517063169</a>
 
-<h2>Grupo</h2>
-<ul>
-        <li>Isadora</li>
-        <li>Julio</li>
-        <li>Khadija</li>
-        <li>Kaio</li>
-        <li>Pedro</li>
-</ul>
+
 
     
